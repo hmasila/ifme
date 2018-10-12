@@ -6,14 +6,14 @@ module AssetsHelper
     content = inline_file(path)
     return nil unless content
 
-    "<script>#{content}</script>".html_safe
+    content_tag(:script, content, nil, false)
   end
 
   def inline_css(path)
     content = inline_file(path, true)
     return nil unless content
 
-    "<style>#{content}</style>".html_safe
+    content_tag(:style, content, nil, false)
   end
 
   private
