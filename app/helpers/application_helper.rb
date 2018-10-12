@@ -109,12 +109,11 @@ module ApplicationHelper
   end
 
   def get_icon_text(icon, text)
-    html = ''
-    if icon && text
-      html += "<i class=\"#{get_icon_class(icon)} smallerMarginRight\"></i>"
-      html += text
-    end
-    html.html_safe
+    icon_class = content_tag(
+      :i, '', class: "#{get_icon_class(icon)} smallerMarginRight"
+    )
+    html = safe_join([icon_class, text]) if icon && text
+    html.nil? ? '' : html
   end
 
   def image_link_to(image_path, url, image_tag_options = {},
