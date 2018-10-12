@@ -4,11 +4,12 @@ module PagesHelper
   include ApplicationHelper
 
   def print_contributors(contributors)
-    contributors.map do |c|
+    links = contributors.map do |c|
       if c.is_a?(Hash) && c['name'].is_a?(String) && c['link'].is_a?(String)
         link_to c['name'], c['link'], target: 'blank'
       end
-    end.to_sentence.html_safe
+    end
+    links.to_sentence
   end
 
   def print_partners(data)
@@ -19,11 +20,11 @@ module PagesHelper
       image = image_tag(d['image_link'], alt: d['name'])
       link = link_to(image, d['link'], target: 'blank')
 
-      html += content_tag(:div, link, class: 'partner') +
-              spacer_tag?(index, data.size)
+      html += safe_join([content_tag(:div, link, class: 'partner'),
+                         spacer_tag?(index, data.size)])
     end
 
-    html.html_safe
+    html
   end
 
   private
