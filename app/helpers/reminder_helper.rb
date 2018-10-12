@@ -8,8 +8,7 @@ module ReminderHelper
       names_arr = data.active_reminders.map(&:name)
       reminders = format_reminders(names_arr)
     end
-
-    reminders.html_safe
+    safe_join([reminders])
   end
 
   private
@@ -19,11 +18,10 @@ module ReminderHelper
   end
 
   def format_reminders(reminder_names)
-    reminders = '<div>'
-    reminders += '<i class="fa fa-bell smallerMarginRight"></i>'
-    reminders += join_names(reminder_names)
-    reminders += '</div>'
-    reminders
+    content_tag(:div) do
+      concat(content_tag(:i, '', class: "fa fa-bell smallerMarginRight"))
+      concat(join_names(reminder_names))
+    end
   end
 
   def join_names(reminder_names)
